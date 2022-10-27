@@ -1,10 +1,5 @@
 #include <stdio.h>
 
-
-
-
-
-
 int main(int argc, char *argv[])
 {
 
@@ -26,7 +21,6 @@ int main(int argc, char *argv[])
     struct vehicle vehicle1 = {"Toyota", "Toyota", "Corolla", 21550};
     toyotaCars[i] = vehicle1;
     i++;
-    printf("THIS IS THE FIRST CAR:\n %s, %s, %.2f\n", toyotaCars[0].make, toyotaCars[0].model, toyotaCars[0].price);
     struct vehicle vehicle2 = {"Toyota", "Toyota", "Camry", 25945};
     toyotaCars[i] = vehicle2;
     i++;
@@ -174,12 +168,13 @@ int main(int argc, char *argv[])
     struct vehicle vehicle50 = {"Volkswagen", "Porsche", "Cayenne", 92960};
     vwCars[i] = vehicle50;
 
-    int count= 10;
+//Change this variable to change how many models of each car there are
+    int modelAmount= 10;
     double temp;
     double temp2;
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < modelAmount; i++)
     {
-        for (int j = i + 1; j < count; j++)
+        for (int j = i + 1; j < modelAmount; j++)
         {
             temp = toyotaCars[i].price;
             temp2 = toyotaCars[j].price;
@@ -193,12 +188,6 @@ int main(int argc, char *argv[])
         }
         
     }
-    for (int i = 0; i < 10; i++)
-    {
-        printf("==== %s, %s ====\n",toyotaCars[i].make, toyotaCars[i].model);
-        printf("$$ %.2f %%\n", toyotaCars[i].price);
-    }
-    
 
     int salary;
     printf("Please enter your salary:\n");
@@ -207,40 +196,37 @@ int main(int argc, char *argv[])
     double interest;
     if (salary <= 30000)
     {
-        interest = 1.0479;
+        interest = 0.1328;
     }
     if (salary > 45000 && salary < 80000)
     {
-        interest = 1.0655;
+        interest = 0.0949;
     }
     if (salary > 80000 && salary <= 125000)
     {
-        interest = 1.0949;
+        interest = 0.0655;
     }
     if (salary > 125000)
     {
-        interest = 1.1328;
+        interest = 0.0479;
     }
+
+    // === Taking user down payment ===
     printf("Enter a down payment:\n");
     int downPayment;
     scanf("%d", &downPayment);
 
+    // === User chooses a car make / model ===
     printf("Available makes and models:\n");
     printf("1. Toyota 2. Chevorlet 3. Nissan 4. VW Group\n");
     int dealerChoice;
     scanf("%d", &dealerChoice);
 
     // Choosing a dealer
-
-    // 1.)Toyota 2.)Chevorlet 3.) Nissan 4.) VW Group"
-    // double principal;
+    // == DEALER VARIABLES ==
     double monthlyPayment;
     double percentOfSalary = 0.15 * salary;
-    int t;
     double principal;
-
-    printf("%d = test amount\n", t);
-    
 
     switch (dealerChoice)
     {
@@ -248,47 +234,39 @@ int main(int argc, char *argv[])
         struct vehicle top3Vehicles[3];
         int j = 0;
         double monthlyPriceList[3];
+        double vehiclePrice;
+
         
+        for(int i = 0;i<modelAmount;i++){
+            vehiclePrice = toyotaCars[i].price;
+            printf("== CAR : %s ==\n", toyotaCars[i].make);
+            printf("Price: $%.2f, Position: %d\n", vehiclePrice, i);
+            principal = vehiclePrice - downPayment;
+            monthlyPayment = (principal + principal * interest * 5)/(5*12);
+            printf("Monthly rate : $%.2f\n", monthlyPayment);
+            printf("Principal: %.2f, Cost of vehicle: %.2f\n",principal, vehiclePrice);
 
+            if(monthlyPayment <= percentOfSalary){
+                top3Vehicles[j] = toyotaCars[i];
+                monthlyPriceList[j] = monthlyPayment;
+                printf("The %d'th vehicle MP is: $%.2f\n",j,monthlyPriceList[j]);
+                printf("MP = $%1.2f\n\n",monthlyPayment);
+                j++;
 
-
-        do{
-            for (int i = 10; i > 0; i--)
-            {
-                //  principal = toyotaCars[i].price - downPayment;
-                //  monthlyPayment = ((principal + principal * interest * 5) / (5 * 12));
-                //  printf("Principal = %d, monthly = %d\n", principal, monthlyPayment);
-                t = toyotaCars[i].price;
-                principal = t - downPayment;
-                printf("%.2f = T, %.2f = principal", t, principal);
-                printf("%.2f\n",interest);
-                monthlyPayment = ((principal + principal * interest * 5) / (5 * 12));
-                printf("==== %s, %s ====\n",toyotaCars[i].make, toyotaCars[i].model);
-                printf("Principal = %.2f, monthly = %.2f\n", principal, monthlyPayment);
-                printf("%d = price, %d = down pament\n", t, downPayment);
-                printf("%.2f - PoS\n", percentOfSalary);
-
-                if (monthlyPayment < percentOfSalary)
-                {
-                    top3Vehicles[j] = toyotaCars[i];
-                    j++;
-                    monthlyPriceList[j] = monthlyPayment;
-                    printf("j = %d\n", j);
-                }
             }
-        }
-        while (j < 3); 
-        
-        for (int i = 0; i < 3; i++)
-        {
 
-            printf("%d .) %s, %s - $%.2f\n", i+1, top3Vehicles[i].make, top3Vehicles[i].model, top3Vehicles[i].price);
-            //printf("\n%d = Dealer choice\n", dealerChoice);
+
         }
+        for (int i = 2; i >= 0; i--)
+        {
+            printf("Top choice %d === %s, %s\n", i+1, top3Vehicles[i].make,top3Vehicles[i].model);
+        }
+        
+
         printf("Select a make/model:");
         int userIn;
         scanf("%d",&userIn);
-        printf("You selected thhe %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", top3Vehicles[userIn-1].make,top3Vehicles[userIn-1].model,monthlyPriceList[userIn-1]);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%d\n", top3Vehicles[userIn-1].make,top3Vehicles[userIn-1].model,monthlyPriceList[0]);
 
         // five years (rate)
 
