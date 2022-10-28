@@ -1,7 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
+    char *ptr;
+    double salary = strtod(argv[1], &ptr);
+
+    // ===== THIS IS ALL STRUCTURAL =====
 
     struct vehicle
     {
@@ -138,6 +145,7 @@ int main(int argc, char *argv[])
     struct vehicle vehicle40 = {"BMW", "BMW", "X7", 77850};
     bmwCars[i] = vehicle40;
     i++;
+    i = 0;
     struct vehicle vehicle41 = {"Volkswagen", "VW", "Jetta", 18995};
     vwCars[i] = vehicle41;
     i++;
@@ -168,8 +176,8 @@ int main(int argc, char *argv[])
     struct vehicle vehicle50 = {"Volkswagen", "Porsche", "Cayenne", 92960};
     vwCars[i] = vehicle50;
 
-//Change this variable to change how many models of each car there are
-    int modelAmount= 10;
+    // Change this variable to change how many models of each car there are
+    int modelAmount = 10;
     double temp;
     double temp2;
     for (int i = 0; i < modelAmount; i++)
@@ -178,21 +186,76 @@ int main(int argc, char *argv[])
         {
             temp = toyotaCars[i].price;
             temp2 = toyotaCars[j].price;
-            if(temp > temp2){
+            if (temp > temp2)
+            {
                 struct vehicle tempV;
                 tempV = toyotaCars[i];
                 toyotaCars[i] = toyotaCars[j];
                 toyotaCars[j] = tempV;
-
             }
         }
-        
     }
 
-    int salary;
-    printf("Please enter your salary:\n");
-    scanf("%d", &salary);
-
+    for (int i = 0; i < modelAmount; i++)
+    {
+        for (int j = i + 1; j < modelAmount; j++)
+        {
+            temp = nissanCars[i].price;
+            temp2 = nissanCars[j].price;
+            if (temp > temp2)
+            {
+                struct vehicle tempV;
+                tempV = nissanCars[i];
+                nissanCars[i] = nissanCars[j];
+                nissanCars[j] = tempV;
+            }
+        }
+    }
+    for (int i = 0; i < modelAmount; i++)
+    {
+        for (int j = i + 1; j < modelAmount; j++)
+        {
+            temp = bmwCars[i].price;
+            temp2 = bmwCars[j].price;
+            if (temp > temp2)
+            {
+                struct vehicle tempV;
+                tempV = bmwCars[i];
+                bmwCars[i] = bmwCars[j];
+                bmwCars[j] = tempV;
+            }
+        }
+    }
+    for (int i = 0; i < modelAmount; i++)
+    {
+        for (int j = i + 1; j < modelAmount; j++)
+        {
+            temp = vwCars[i].price;
+            temp2 = vwCars[j].price;
+            if (temp > temp2)
+            {
+                struct vehicle tempV;
+                tempV = vwCars[i];
+                vwCars[i] = vwCars[j];
+                vwCars[j] = tempV;
+            }
+        }
+    }
+    for (int i = 0; i < modelAmount; i++)
+    {
+        for (int j = i + 1; j < modelAmount; j++)
+        {
+            temp = chevorletCars[i].price;
+            temp2 = chevorletCars[j].price;
+            if (temp > temp2)
+            {
+                struct vehicle tempV;
+                tempV = chevorletCars[i];
+                chevorletCars[i] = chevorletCars[j];
+                chevorletCars[j] = tempV;
+            }
+        }
+    }
     double interest;
     if (salary <= 30000)
     {
@@ -211,67 +274,108 @@ int main(int argc, char *argv[])
         interest = 0.0479;
     }
 
-    // === Taking user down payment ===
-    printf("Enter a down payment:\n");
-    int downPayment;
-    scanf("%d", &downPayment);
+    // for (int i = 0; i < modelAmount; i++)
+    // {
+    //     printf(" ===== CAR SLOT %d =====\n", i);
+    //     printf("* * %s, %s - $%.2f\n", nissanCars[i].make, nissanCars[i].model, nissanCars[i].price);
+    //     printf("* * %s, %s - $%.2f\n", bmwCars[i].make, bmwCars[i].model, bmwCars[i].price);
+    //     printf("* * %s, %s - $%.2f\n", vwCars[i].make, vwCars[i].model, vwCars[i].price);
+    //     printf("* * %s, %s - $%.2f\n\n", chevorletCars[i].make, chevorletCars[i].model, chevorletCars[i].price);
+    // }
 
-    // === User chooses a car make / model ===
-    printf("Available makes and models:\n");
-    printf("1. Toyota 2. Chevorlet 3. Nissan 4. VW Group\n");
-    int dealerChoice;
-    scanf("%d", &dealerChoice);
+    // ===== BEGINNNING OF FORMATTING AND INPUT/OUTPUT CODE =====
+
+    // === Taking user down payment ===
+    printf("Enter a down payment: ");
+    double downPayment;
+    scanf("%lf", &downPayment);
 
     // Choosing a dealer
     // == DEALER VARIABLES ==
+    double monthlyPay[10];
     double monthlyPayment;
-    double percentOfSalary = 0.15 * salary;
+    double percentOfSalary = 0.15 * (salary / 12);
+
     double principal;
+    double principalList[5];
+    double lowestVehicleCost[] = {toyotaCars[0].price, chevorletCars[0].price, nissanCars[0].price, bmwCars[0].price, vwCars[0].price};
+
+    for (int i = 0; i < 5; i++)
+    {
+        principalList[i] = lowestVehicleCost[i] - downPayment;
+        monthlyPay[i] = (principalList[i] + principalList[i] * interest * 5) / (5 * 12);
+    }
+
+    char manufacAvlb[50] = "";
+    char toyotaName[] = "1.) Toyota  ";
+    char chevorletName[] = "2.) Chevorlet  ";
+    char nissanName[] = "3.) Nissan  ";
+    char bmwName[] = "4.) BMW  ";
+    char vwName[] = "5.) VW Group  ";
+    if (monthlyPay[0] < percentOfSalary)
+    {
+        strcat(manufacAvlb, toyotaName);
+    }
+    if (monthlyPay[1] < percentOfSalary)
+    {
+        strcat(manufacAvlb, chevorletName);
+    }
+    if (monthlyPay[2] < percentOfSalary)
+    {
+        strcat(manufacAvlb, nissanName);
+    }
+    if (monthlyPay[3] < percentOfSalary)
+    {
+        strcat(manufacAvlb, bmwName);
+    }
+    if (monthlyPay[4] < percentOfSalary)
+    {
+        strcat(manufacAvlb, vwName);
+    }
+
+    // === User chooses a car make / model ===
+    printf("Available manufacturers:\n");
+    printf("%s\n", manufacAvlb);
+    printf("Select manufacturer: ");
+    int dealerChoice;
+    scanf("%d", &dealerChoice);
 
     switch (dealerChoice)
     {
     case 1:
-        struct vehicle top3Vehicles[3];
+        struct vehicle topVehicles[11];
         int j = 0;
-        double monthlyPriceList[3];
-        double vehiclePrice;
+        double topPriceList[11];
 
-        
-        for(int i = 0;i<modelAmount;i++){
-            vehiclePrice = toyotaCars[i].price;
-            printf("== CAR : %s ==\n", toyotaCars[i].make);
-            printf("Price: $%.2f, Position: %d\n", vehiclePrice, i);
-            principal = vehiclePrice - downPayment;
-            monthlyPayment = (principal + principal * interest * 5)/(5*12);
-            printf("Monthly rate : $%.2f\n", monthlyPayment);
-            printf("Principal: %.2f, Cost of vehicle: %.2f\n",principal, vehiclePrice);
-
-            if(monthlyPayment <= percentOfSalary){
-                top3Vehicles[j] = toyotaCars[i];
-                monthlyPriceList[j] = monthlyPayment;
-                printf("The %d'th vehicle MP is: $%.2f\n",j,monthlyPriceList[j]);
-                printf("MP = $%1.2f\n\n",monthlyPayment);
-                j++;
-
-            }
-
-
-        }
-        for (int i = 2; i >= 0; i--)
+        // ===== Displaying the affordable models =====
+        printf("Available Make/Model: \n");
+        for (int i = 0; i < modelAmount; i++)
         {
-            printf("Top choice %d === %s, %s\n", i+1, top3Vehicles[i].make,top3Vehicles[i].model);
-        }
-        
+            principal = toyotaCars[i].price - downPayment;
+            monthlyPayment = (principal + principal * interest * 5) / (5 * 12);
+            if (monthlyPayment <= percentOfSalary)
+            {
+                topVehicles[j] = toyotaCars[i];
+                topPriceList[j] = monthlyPayment;
+                j++;
+            }
+        }     
+        int y = 0;
+        do
+        {
+            printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
+            y++;
+        } while (topPriceList[y] > 0);
 
-        printf("Select a make/model:");
+        // ===== Handling the model choice =====
+        printf("\nSelect a make/model:");
         int userIn;
-        scanf("%d",&userIn);
-        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%d\n", top3Vehicles[userIn-1].make,top3Vehicles[userIn-1].model,monthlyPriceList[0]);
-
-        // five years (rate)
+        scanf("%d", &userIn);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
 
         break;
     case 2:
+    
 
         break;
     case 3:
