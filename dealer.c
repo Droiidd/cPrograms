@@ -338,14 +338,16 @@ int main(int argc, char *argv[])
     printf("%s\n", manufacAvlb);
     printf("Select manufacturer: ");
     int dealerChoice;
+    int userIn;
+    struct vehicle topVehicles[11];
+    int j = 0;
+    double topPriceList[11];
+    int y = 0;
     scanf("%d", &dealerChoice);
 
     switch (dealerChoice)
     {
     case 1:
-        struct vehicle topVehicles[11];
-        int j = 0;
-        double topPriceList[11];
 
         // ===== Displaying the affordable models =====
         printf("Available Make/Model: \n");
@@ -359,8 +361,8 @@ int main(int argc, char *argv[])
                 topPriceList[j] = monthlyPayment;
                 j++;
             }
-        }     
-        int y = 0;
+        }
+
         do
         {
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
@@ -369,20 +371,126 @@ int main(int argc, char *argv[])
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
-        int userIn;
+
         scanf("%d", &userIn);
         printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
 
         break;
     case 2:
-    
+
+        // ===== Displaying the affordable models =====
+        printf("Available Make/Model: \n");
+        for (int i = 0; i < modelAmount; i++)
+        {
+            principal = chevorletCars[i].price - downPayment;
+            monthlyPayment = (principal + principal * interest * 5) / (5 * 12);
+            if (monthlyPayment <= percentOfSalary)
+            {
+                topVehicles[j] = chevorletCars[i];
+                topPriceList[j] = monthlyPayment;
+                j++;
+            }
+        }
+
+        do
+        {
+            printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
+            y++;
+        } while (topPriceList[y] > 0);
+
+        // ===== Handling the model choice =====
+        printf("\nSelect a make/model:");
+
+        scanf("%d", &userIn);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
 
         break;
     case 3:
 
+        // ===== Displaying the affordable models =====
+        printf("Available Make/Model: \n");
+        for (int i = 0; i < modelAmount; i++)
+        {
+            principal = nissanCars[i].price - downPayment;
+            monthlyPayment = (principal + principal * interest * 5) / (5 * 12);
+            if (monthlyPayment <= percentOfSalary)
+            {
+                topVehicles[j] = nissanCars[i];
+                topPriceList[j] = monthlyPayment;
+                j++;
+            }
+        }
+
+        do
+        {
+            printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
+            y++;
+        } while (topPriceList[y] > 0);
+
+        // ===== Handling the model choice =====
+        printf("\nSelect a make/model:");
+
+        scanf("%d", &userIn);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
+
         break;
 
     case 4:
+
+        // ===== Displaying the affordable models =====
+        printf("Available Make/Model: \n");
+        for (int i = 0; i < modelAmount; i++)
+        {
+            principal = bmwCars[i].price - downPayment;
+            monthlyPayment = (principal + principal * interest * 5) / (5 * 12);
+            if (monthlyPayment <= percentOfSalary)
+            {
+                topVehicles[j] = bmwCars[i];
+                topPriceList[j] = monthlyPayment;
+                j++;
+            }
+        }
+
+        do
+        {
+            printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
+            y++;
+        } while (topPriceList[y] > 0);
+
+        // ===== Handling the model choice =====
+        printf("\nSelect a make/model:");
+
+        scanf("%d", &userIn);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
+
+        break;
+    case 5:
+
+        // ===== Displaying the affordable models =====
+        printf("Available Make/Model: \n");
+        for (int i = 0; i < modelAmount; i++)
+        {
+            principal = vwCars[i].price - downPayment;
+            monthlyPayment = (principal + principal * interest * 5) / (5 * 12);
+            if (monthlyPayment <= percentOfSalary)
+            {
+                topVehicles[j] = vwCars[i];
+                topPriceList[j] = monthlyPayment;
+                j++;
+            }
+        }
+
+        do
+        {
+            printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
+            y++;
+        } while (topPriceList[y] > 0);
+
+        // ===== Handling the model choice =====
+        printf("\nSelect a make/model:");
+
+        scanf("%d", &userIn);
+        printf("You selected the %s %s. Your monthly payment will be:\n ~~~  $%.2f\n", topVehicles[userIn - 1].make, topVehicles[userIn - 1].model, topPriceList[userIn - 1]);
 
         break;
     }
