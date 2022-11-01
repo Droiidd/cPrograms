@@ -363,11 +363,15 @@ int main(int argc, char *argv[])
             }
         }
 
-        do
+        while (topPriceList[y] > 0)
         {
+            if(topPriceList[y] < 100){
+                break;
+            }
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
             y++;
-        } while (topPriceList[y] > 0);
+            
+        } ;
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
@@ -392,11 +396,14 @@ int main(int argc, char *argv[])
             }
         }
 
-        do
+        while (topPriceList[y] > 0)
         {
+            if(topPriceList[y] < 100){
+                continue;
+            }
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
             y++;
-        } while (topPriceList[y] > 0);
+        } ;
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
@@ -421,11 +428,14 @@ int main(int argc, char *argv[])
             }
         }
 
-        do
+        while (topPriceList[y] > 0)
         {
+            if(topPriceList[y] < 100){
+                continue;
+            }
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
             y++;
-        } while (topPriceList[y] > 0);
+        };
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
@@ -451,11 +461,14 @@ int main(int argc, char *argv[])
             }
         }
 
-        do
+        while (topPriceList[y] > 0)
         {
+            if(topPriceList[y] < 100){
+                continue;
+            }
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
             y++;
-        } while (topPriceList[y] > 0);
+        };
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
@@ -480,11 +493,14 @@ int main(int argc, char *argv[])
             }
         }
 
-        do
+        while (topPriceList[y] > 0)
         {
+            if(topPriceList[y] < 100){
+                continue;
+            }
             printf("%d) %s %s - $%.2f \n", y + 1, topVehicles[y].make, topVehicles[y].model, topVehicles[y].price);
             y++;
-        } while (topPriceList[y] > 0);
+        };
 
         // ===== Handling the model choice =====
         printf("\nSelect a make/model:");
