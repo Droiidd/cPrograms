@@ -1,0 +1,123 @@
+							Remove element
+
+int removeElement(int* nums, int numsSize, int val){
+    int k = 0;
+    for(int i = 0; i < numsSize; i++){
+        if(nums[i] != val){
+            nums[k] = nums[i];
+            k+=1;
+            continue;
+        }
+    }return k;
+}
+
+							Remove Duplicate
+
+int removeDuplicates(int* nums, int numsSize){
+    int k = 1;
+
+        for(int j = 0; j < numsSize-1; j++){
+            if(nums[j] != nums[j+1]){
+                nums[k] = nums[j+1];
+                k+=1;
+                continue;
+            }
+        
+    }return k;
+}
+
+							Merge Two Sorted lists
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+   
+    struct ListNode* temp;
+    
+    //struct ListNode* head;
+    
+    if(!list1){ return list2; }
+    if(!list2){ return list1; }
+
+    if(list1->val > list2->val){
+        struct ListNode* temp = list1;
+        list1 = list2;
+        list2 = temp;
+        }
+    struct ListNode* head = list1;
+    
+    while(list1->next){
+        if(list1->next->val > list2->val){
+            struct ListNode* temp2 = list1->next;
+            list1->next = list2;
+            list1 = list2;
+            list2 = temp2;
+        }else{ list1 = list1->next; }
+
+    }
+    list1->next = list2;
+    return head;
+}
+
+							Roman to Int
+
+int romanToInt(char * s){
+    int i =0;
+    int total = 0;
+    //Trying a slightly different coding style than usual with the if statements since theres a lot of cases to handle.
+    //I'd like to keep it as clean and readable as possible.
+    while(s[i]!= '\0'){
+        //Ordering from high to low for each character.
+        if(s[i] == 'M'){ total += 1000;}
+        else if(s[i] == 'D'){total += 500;}
+        //Handling all C cases
+        else if(s[i] == 'C'){
+            if(s[i+1] != '\0' && s[i+1] == 'M'){total += 900; i++;}
+            else if(s[i+1] != '\0' && s[i+1] == 'D'){total += 400; i++;}
+            else{total += 100;}
+        }
+        else if(s[i] == 'L'){total += 50;}
+        //Handling all X cases
+        else if(s[i] == 'X'){
+            if(s[i+1] != '\0' && s[i+1] == 'C'){total += 90; i++;}
+            else if(s[i+1] != '\0' && s[i+1] == 'L'){total += 40; i++;}
+            else{total += 10;}
+        }
+        else if(s[i] == 'V'){total += 5;}
+        //Handling all I cases
+        else if(s[i] == 'I'){
+            if(s[i+1] != '\0' && s[i+1] == 'X'){total += 9; i++;}
+            else if(s[i+1] != '\0' && s[i+1] == 'V'){total += 4; i++;}
+            else{total += 1;}
+        } i++;
+    }
+    return total;
+}
+
+							Remove 9th n
+
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
+    int i = 0;
+    //Case for empty
+    if(!head){return head;}
+
+    struct ListNode* nav = head, *temp;
+
+    while(nav){
+        i++;
+        nav = nav->next;
+    }
+    if(i == n){
+        temp = head->next;
+        free(head);
+        return temp;
+    }
+    nav = head;
+    i -= n;
+
+    for(int j = 0; j< i-1; j++){nav = nav->next;}
+
+    temp = nav->next ? nav->next->next : NULL;
+    free(nav->next);
+    nav->next = temp;
+
+    return head; 
+}
