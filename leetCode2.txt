@@ -1,0 +1,183 @@
+==== Happy number ====
+
+int digitSqSum(int i){
+    int total=0;
+        while(i>0){
+            total += ((i%10)*(i%10));
+            i/=10;
+        }
+        return total;
+    }
+bool isHappy(int n){
+    int i = n;
+    while(1){
+        if(i == 89){
+            return false;
+        }
+        if(i == 1){
+            return true;
+        }
+        i = digitSqSum(i);
+    }
+}
+
+
+=== climbing stairs ===
+
+int climbStairs(int n){
+    if(n<1){ return 1; }
+    if(n<3){ return n; }
+    int arr[n+1];
+    arr[1] = 1;
+    arr[2] = 2;
+	for(int i = 3; i <= n; i++)
+		arr[i] = arr[i-1] + arr[i-2];
+	return arr[n];
+    
+
+}
+
+=== int to roman ===
+
+char * intToRoman(int num){
+    
+    char chI = 'I';
+    char chV = 'V';
+    char chX = 'X';
+    char chL = 'L';
+    char chC = 'C';
+    char chD = 'D';
+    char chM = 'M';
+
+    char* str = (char*)malloc(20 * sizeof(char));
+    bool sleepC = false;
+    bool sleepX = false;
+    bool sleepI = false;
+    for (int i = 0; i< 20; i++)
+    {
+        str[i] = '\0';
+    }
+while (num - 1000 >= 0)
+    {
+        strncat(str, &chM, 1);
+        num-=1000;
+    }
+    if(num - 900 >= 0){
+        strncat(str, &chC, 1);
+        strncat(str, &chM, 1);
+        num-=900;
+        sleepC = true;
+    }
+    if(!sleepC && (num - 500 >= 0)){
+        strncat(str, &chD, 1);
+        num-=500;
+    }
+    else if(!sleepC && (num - 400 >= 0)){
+        strncat(str, &chC, 1);
+        strncat(str, &chD, 1);
+        num-=400;
+        
+    }
+
+
+    while(!sleepC && (num - 100 >= 0)){
+        strncat(str, &chC, 1);
+        num-=100;
+    }
+    if(num - 90 >= 0){
+        strncat(str, &chX, 1);
+        strncat(str, &chC, 1);
+        num-=90;
+        sleepX = true;
+    }
+    if(!sleepX && (num - 50 >= 0)){
+        strncat(str, &chL, 1);
+        num-=50;
+        
+    }
+    else if(!sleepX && (num - 40 >= 0)){
+        strncat(str, &chX, 1);
+        strncat(str, &chL, 1);
+        num-=40;
+        
+    }
+
+
+    while(!sleepX && (num - 10 >= 0)){
+        strncat(str, &chX, 1);
+        num-=10;
+    }
+    if(num - 9 >= 0){
+        strncat(str, &chI, 1);
+        strncat(str, &chX, 1);
+        num-=9;
+    }
+    if(num - 5 >= 0){
+        strncat(str, &chV, 1);
+        num-=5;
+    }
+    else if(num - 4 >= 0){
+        strncat(str, &chI, 1);
+        strncat(str, &chV, 1);
+        num-=4;
+    }
+    while(num - 1 >= 0){
+        strncat(str, &chI, 1);
+        num-=1;
+    }
+    
+    
+
+return str;
+
+}
+
+=== Find closest K elements ===
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int comparer(const void * a, const void * b) {
+    return (*(int*)a - *(int*)b );
+}
+
+void search(int * arr, int x, int k, int index, int * ret, int arrSize) {
+    int left = 1, right = 0;  
+    int count = 0;
+    while (count < k) {
+        if (index - left < 0){
+            ret[count++] = arr[index + right];
+            right++;
+        } else if (index + right == arrSize){
+            ret[count++] = arr[index - left];
+            left++;
+        }
+        else if (abs(arr[index - left] - x) < abs(arr[index+right] - x) || ((abs(arr[index - left] - x) == abs(arr[index+right] - x)) && (index - left) < (index + right))) {
+            ret[count++] = arr[index - left];
+            left++;
+        } else {
+            ret[count++] = arr[index + right];
+            right++;
+        }
+    }
+}
+
+int* findClosestElements(int* arr, int arrSize, int k, int x, int* returnSize){
+    int start = 0, end = arrSize - 1;
+    int *ret = (int*)malloc(sizeof(int) * k);
+    while (start <= end) {
+        int mid = (start + end) / 2;
+        if (arr[mid] == x) {
+            start = mid; 
+            break;
+        } else if (arr[mid] < x) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    *returnSize = k;
+    search(arr, x, k, start, ret, arrSize);
+    qsort(ret, k, sizeof(int), comparer);
+    return ret;
+}
